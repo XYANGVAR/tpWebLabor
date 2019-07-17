@@ -1,0 +1,439 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>实验室</title>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<link href="/public/static/css/Details.css" rel='stylesheet' type='text/css' />
+		<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="/public/static/css/time.css" />
+		<!--<link rel="stylesheet" href="/static/css/alert.css">-->
+		<!--<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
+		<!--<script src='/static/js/shCore.js'></script>-->
+		<!--<script src='/static/js/alert.js'></script>-->
+		<!--<script src='/static/js/alert-api.js'></script>-->
+		<script type="text/javascript" src="/public/static/js/jquery-3.3.1.min.js"></script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div id="body">
+				
+				<div class="time_input">
+					<form method="post" id="login">
+						<input type="hidden" name="num" value="{$lab.num}">
+						<p class="title_p">	开始使用时间:</p>
+						<input class="text_input" name="begin_time" type="text" placeholder="选择开始时间" :value="last_time" readonly @click="demo"/>
+						<p class="title_p">	结束使用时间:</p>
+						<input class="text_input" name="end_time" type="text" placeholder="选择结束时间" :value="last_time2" readonly @click="demo2"/><br />
+						{if $lab.is_order==0}
+						<button type="button" id="submit_button" class="submit">预定</button>
+						<script>
+                            var wait = 40;
+                            function time(o) {
+                                if(wait == 0) {
+                                    o.removeAttribute("disabled");
+                                    wait = 40;
+                                } else {
+                                    o.setAttribute("disabled", true);
+                                    wait--;
+                                    setTimeout(function() {
+                                            time(o)
+                                        },
+                                        1000)
+                                }
+                            }
+                            document.getElementById("submit_button").onclick = function() {
+                                time(this);
+                            }
+						</script>
+						{else /}
+						<button type="button" disabled id="submit_button" class="submit">预定</button>
+						<script>
+                            var wait = 40;
+                            function time(o) {
+                                if(wait == 0) {
+                                    o.removeAttribute("disabled");
+                                    wait = 40;
+                                } else {
+                                    o.setAttribute("disabled", true);
+                                    wait--;
+                                    setTimeout(function() {
+                                            time(o)
+                                        },
+                                        1000)
+                                }
+                            }
+                            document.getElementById("submit_button").onclick = function() {
+                                time(this);
+                            }
+						</script>
+						{/if}
+					</form>
+
+
+				</div>
+
+				<div class="y_date" v-show="y_date_show" :class="{'y_data_s':input_id==1,'y_data_e':input_id==2}">
+					<div class="y_tit"><i class="t_l" @click="before_select"><</i><span @click="select_y">{{y_now_year}}</span><span @click="select_m">{{y_month[y_now_month]}}</span><i class="t_r" @click="after_select">></i></div>
+					<div class="y_month">
+						<ul>
+							<li v-show="select_item==1" v-for="(item,index) in y_month" v-bind:class="{active:y_now_month==index}" @click="select_month(index)">{{item}}</li>
+							<li v-show="select_item==2" v-for="(item,index) in y_year" v-bind:class="{active:y_now_year==item}" @click="select_year(item)">{{item}}</li>
+						</ul>
+					</div>
+					<div class="y_day" v-show="select_item==3">
+						<span v-for="item in y_week">{{item}}</span>
+						<a href="javascript:void(0);" v-for="(item,index) in dateList" @click="select_day(item)" :class="{'span_gray':item.previousMonth||item.nextMonth,'unselected':check_selct(item),'active':check_time(item)&&y_now_day==item.value}">{{item.value}}</a>
+					</div>
+				</div>
+				<br />
+				当前实验室状态:
+				<p id="user_state">
+					{switch $lab.is_order }
+					{case 0 }<span style="color:green">空闲</span>{/case}
+					{case 1}<span style="color:orange">待审核</span>{/case}
+					{case 2}<span style="color:red">已预约</span>{/case}
+					{default /}默认情况
+					{/switch}
+				</p>
+			</div>
+			<div class="slider">
+				<div class="area">
+					<div id=js class="js">
+						<div class="box01">
+							<img style="DISPLAY: none" src="/public/static/images/lab1.jpg">
+							<img style="DISPLAY: none" src="/public/static/images/lab2.jpg">
+							<img style="DISPLAY: none" src="/public/static/images/lab3.jpg">
+							<img style="DISPLAY: none" src="/public/static/images/lab4.jpg">
+							<img style="DISPLAY: none" src="/public/static/images/lab5.jpg">
+						</div>
+
+						<div id=jsNav class=jsNav>
+							<a class="trigger imgSelected" href="javascript:void(0)">1</a>
+							<a class="trigger" href="javascript:void(0)">2</a>
+							<a class="trigger" href="javascript:void(0)">3</a>
+							<a class="trigger" href="javascript:void(0)">4</a>
+							<a class="trigger" href="javascript:void(0)">5</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<hr />
+		<div class="container-right">
+			<div class="container1">
+				<div class="pic-sale1">
+					<img src="/public/static/images/attention.png" title="粉色衬衣" />
+					<div class="text_title">实验室主要功能</div>
+					<div class="text_describle123">
+							{$lab.function}
+					</div>
+				</div>
+			</div>
+
+			<div class="container2">
+				<div class="pic-sale2">
+					<img src="/public/static/images/attention.png" title="儿童卫衣" />
+					<div class="text_title">实验室使用注意事项</div>
+					<div class="text_describle456">
+							{$lab.attention}
+					</div>
+					<script>$(function(){
+                        var element = $("div[class='text_describle456']");
+                        var temp =  element.text().replace(/\n/g,'<br/>');
+                        element.html(temp);
+                    });
+					</script>
+					<script>$(function(){
+                        var element = $("div[class='text_describle123']");
+                        var temp =  element.text().replace(/\n/g,'<br/>');
+                        element.html(temp);
+                    });
+					</script>
+				</div>
+			</div>
+
+			<div class="container3">
+				<div class="pic-sale3">
+					<img src="/public/static/images/teacher.png" />
+					<div class="text_title">实验室负责人信息</div>
+					<div class="text_describle">
+						<ol>
+							<li>姓名: {$lab.charge_person|getTeacherName}</li>
+							<br />
+							<li>邮箱: {$lab.charge_person|getTeacherMail}</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<script type="text/javascript" src="/public/static/js/js.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".area").hover(function() {
+					$(this).find(".qq").show(200);
+				}, function() {
+					$(this).find(".qq").hide(200);
+				});
+			});
+		</script>
+		<script>
+			new Vue({
+				el: '#body',
+				data: {
+					y_week: ['日', '六', '五', '四', '三', '二', '一'],
+					y_month: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+					y_year: [],
+					y_day: [],
+					y_now_month: null,
+					y_now_year: null,
+					y_now_day: null,
+					istrue: true,
+					date_now: new Date(),
+					select_item: 3,
+					y_date_show: false,
+					last_time: null,
+					last_time2: null,
+					input_id: 0 //1.是开始时间，2是结束时间
+				},
+				created() {
+					this.y_now_month = this.date_now.getMonth();
+					this.y_now_year = this.date_now.getFullYear();
+					this.y_now_day = this.date_now.getDate();
+					this.yearlist();
+				},
+				computed: {
+					dateList() {
+						let currentMonthLength = new Date(this.y_now_year, this.y_now_month + 1, 0).getDate()
+						let dateList = Array.from({
+							length: currentMonthLength
+						}, (val, index) => {
+							return {
+								currentMonth: true,
+								value: index + 1
+							}
+						})
+						let startDay = new Date(this.y_now_year, this.y_now_month, 1).getDay()
+						let previousMongthLength = new Date(this.y_now_year, this.y_now_month, 0).getDate()
+
+						for(let i = 0, len = startDay; i < len; i++) {
+							dateList = [{
+								previousMonth: true,
+								value: previousMongthLength - i
+							}].concat(dateList)
+						}
+						for(let i = dateList.length, item = 1; i < 42; i++, item++) {
+							dateList[dateList.length] = {
+								nextMonth: true,
+								value: item
+							}
+						}
+						return dateList
+					}
+				},
+				methods: {
+					demo: function() {
+						this.input_id = 1;
+						this.y_date_show = true;
+					},
+					demo2: function() {
+						this.input_id = 2;
+						this.select_item = 3;
+						this.y_date_show = true;
+					},
+					check_selct: function(item) {
+						if(this.input_id == 1) {
+							if(this.last_time2 != null) { //如果选了结束时间，并且开始时间要小于结束时间，那么unselected就要显示
+								if(item.previousMonth) {
+									var start_time = new Date(this.y_now_year + '-' + this.check_number(this.y_now_month) + '-' + this.check_number(item.value));
+								} else {
+									var start_time = new Date(this.y_now_year + '-' + this.check_number(this.y_now_month + 1) + '-' + this.check_number(item.value));
+								}
+								var end_time = new Date(this.last_time2);
+								if(start_time > end_time) {
+									return true;
+								}
+								if(item.nextMonth) {
+									return true;
+								}
+							}
+						}
+						if(this.input_id == 2) {
+							if(this.last_time != null) { //如果选了开始时间，那么unselected就要显示
+								if(item.nextMonth) {
+									var end_time = new Date(this.y_now_year + '-' + this.check_number(this.y_now_month + 2) + '-' + this.check_number(item.value));
+								} else {
+									var end_time = new Date(this.y_now_year + '-' + this.check_number(this.y_now_month + 1) + '-' + this.check_number(item.value));
+								}
+								var start_time = new Date(this.last_time);
+								if(start_time > end_time) {
+									return true;
+								}
+								if(item.previousMonth) {
+									return true;
+								}
+							}
+						}
+					},
+					check_time: function(item) {
+						if(this.last_time != null) { //如果选了开始时间，那么active为开始时间
+							var c_m = this.last_time.substr(5, 2); //选择时间的月份
+							c_m = parseInt(c_m) - 1;
+							if(c_m == this.y_now_month) {
+								if(item.value == this.y_now_day && item.currentMonth) {
+									return true;
+								}
+							}
+						} else {
+							if(this.y_now_day == item.value) {
+								return true;
+							}
+						}
+					},
+					check_number: function(e) {
+						if(e < 10) {
+							e = '0' + e;
+						}
+						return e;
+					},
+					select_month: function(i) {
+						this.y_now_month = i;
+						this.select_item = 3;
+					},
+					select_year: function(i) {
+						this.y_now_year = i;
+						this.select_item = 1;
+					},
+					select_day: function(item) {
+						if(this.input_id == 1) {
+							if(this.last_time2 != null) { //选了结束时间
+								var start_time = new Date(this.last_time2);
+								var end_time = new Date(this.y_now_year + '-' + this.check_number(this.y_now_month + 1) + '-' + this.check_number(item.value));
+								if(item.nextMonth) { //选了结束时间下个月不能点
+									return;
+								}
+								if(item.currentMonth) {
+									if(end_time > start_time) { //选了结束时间，开始时间不能大于结束时间
+										return;
+									}
+								}
+							}
+							this.y_date_show = false;
+							this.y_now_day = item.value;
+							if(item.previousMonth) {
+								this.y_now_month = this.y_now_month - 1;
+							}
+							if(item.nextMonth) {
+								this.y_now_month = this.y_now_month + 1;
+							}
+							this.last_time = this.y_now_year + '-' + this.check_number(this.y_now_month + 1) + '-' + this.check_number(item.value);
+						}
+						if(this.input_id == 2) {
+							if(this.last_time != null) { //选了开始时间
+								var start_time = new Date(this.last_time);
+								var end_time = new Date(this.y_now_year + '-' + this.check_number(this.y_now_month + 1) + '-' + this.check_number(item.value));
+								if(item.previousMonth) {
+									return;
+								}
+								if(item.currentMonth) {
+									if(end_time < start_time) {
+										return;
+									}
+								}
+							}
+							this.y_date_show = false;
+							this.y_now_day = item.value;
+							if(item.previousMonth) {
+								this.y_now_month = this.y_now_month - 1;
+							}
+							if(item.nextMonth) {
+								this.y_now_month = this.y_now_month + 1;
+							}
+							this.last_time2 = this.y_now_year + '-' + this.check_number(this.y_now_month + 1) + '-' + this.check_number(item.value);
+						}
+					},
+					yearlist: function() {
+						this.y_year = [];
+						var arr_item;
+						for(var i = 0; i < 12; i++) {
+							if(i < 5) {
+								arr_item = this.y_now_year - i;
+								this.y_year.unshift(arr_item);
+							} else {
+								arr_item = this.y_now_year + i - 4;
+								this.y_year.push(arr_item);
+							}
+						}
+					},
+					select_y: function() {
+						this.yearlist();
+						this.select_item = 2;
+					},
+					select_m: function() {
+						this.select_item = 1;
+					},
+					before_select: function() {
+						if(this.select_item == 2) {
+							var arr_item = this.y_year[0];
+							this.y_year = [];
+							for(var i = 0; i < 12; i++) {
+								arr_item = arr_item - 1;
+								this.y_year.unshift(arr_item);
+							}
+						}
+						if(this.select_item == 3) {
+							this.y_now_month = this.y_now_month === 0 ? 0 : this.y_now_month - 1
+						}
+					},
+					after_select: function() {
+						if(this.select_item == 2) {
+							var arr_item = this.y_year[11];
+							this.y_year = [];
+							for(var i = 0; i < 12; i++) {
+								arr_item = arr_item + 1;
+								this.y_year.push(arr_item);
+							}
+						}
+						if(this.select_item == 3) {
+							this.y_now_month = this.y_now_month === 11 ? 11 : this.y_now_month + 1
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+
+</html>
+
+<script>
+	$(function () {
+		$("#submit_button").on('click',function () {
+			$.ajax({
+				type: 'post',
+				url:"{:url('user/reserve')}",
+				data:$('#login').serialize(),
+				dataType:'json',
+				success:function (data) {
+					switch (data.success) {
+						case 1:
+							alert(data.message);
+							window.location.href = "{:url('index/stuspace')}";
+							break;
+						case 0:
+						case -1:
+							alert(data.message);
+							window.location.back;
+					}
+				},
+				error:function () {
+					alert('error');
+				}
+			})
+		})
+	});
+</script>

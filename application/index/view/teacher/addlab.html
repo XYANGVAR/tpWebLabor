@@ -1,0 +1,35 @@
+﻿<html>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title>实验室添加</title>
+        <link rel="stylesheet" href="/public/static/css/add_lab.css">
+        <link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+    </head>
+
+    <body>
+        <div class="page-container">
+            {if $lab.num}
+            <br>
+            <br>
+            <p>您已经有一个实验室啦！</p>
+            {else/}
+            <form action="{:url('teacher/insertlab')}" method="post">
+                <!--<form action="ShowAll_lab.html" method="post">-->
+                <input type="text" class="Captcha" name="num" placeholder="实验室编号" required="required" oninput = "value=value.replace(/[^\d]/g,'')">
+                <input type="text" name="name" class="" placeholder="实验室名称" required="required">
+                <p>实验室注意事项:</p>
+                <textarea name="attention" class="username" required="required"></textarea>
+                <p>实验室主要功能:</p>
+                <textarea name="function" class="username" required="required"></textarea>
+                <button type="submit" class="submit_button">添加</button>
+            </form>
+            {/if}
+        </div>
+    </body>
+<div style="text-align:center;">
+
+</div>
+</html>
+

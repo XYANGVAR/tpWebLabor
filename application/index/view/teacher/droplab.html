@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人预约列表</title>
+	<link rel="stylesheet" type="text/css" href="/public/static/css/drop_lab.css"/>
+	<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body>
+	<main>
+		<h1>我的实验室</h1>
+		<table>
+			{if $lab.num}
+			<tr>
+				<th>实验室名称</th>
+				<th>实验室编号</th>
+				<th>负责人</th>
+				<th>操作</th>
+			</tr>
+			<tr>
+				<td>{$lab.name}</td>
+				<td>{$lab.num}</td>
+				<td>{$Think.session.teach_name}</td>
+				<td><a href="" onclick="del();return false" class="adminder_button" style="text-decoration: none">删除</a></td>
+			</tr>
+
+			<script>
+				function del() {
+					if (confirm('您真的要删除该实验室吗？') == true) {
+						window.location.href = "{:url('teacher/doDelete',['num'=>$lab.num])}"
+					}
+				}
+			</script>
+			{else/}
+			<br>
+			<br>
+			<p>当前没有实验室。</p>
+			{/if}
+
+		</table>
+		<div style='clear:both'></div>
+	</main>
+</body>
+</html>

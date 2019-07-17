@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人预约列表</title>
+	<link rel="stylesheet" type="text/css" href="/public/static/css/order.css"/>
+	<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+	<!--<script src='../js/biaoge.js'></script>-->
+</head>
+<body>
+
+	<main>
+
+		<h1>已审核列表</h1>
+		{if $replyList->isEmpty()}
+		<br>
+		<br>
+		<p>当前没有审核记录。</p>
+		{else/}
+		<table>
+			<tr>
+				<th>操作人姓名</th>
+				<th>实验室名称</th>
+				<th>开始时间</th>
+				<th>结束时间</th>
+				<th>审核结果</th>
+				<th>申请人名称</th>
+			</tr>
+		{volist name="replyList" id="reply"}
+			<tr>
+				<td>{$Think.session.teach_name}</td>
+				<td>{$reply.lab_name}</td>
+				<td>{$reply.begin_time}</td>
+				<td>{$reply.end_time}</td>
+				<td>
+				{switch $reply.result }
+				{case 0}<span style="color:red">拒绝</span>{/case}
+				{case 1}<span style="color:green">同意</span>{/case}
+				{default /}默认情况
+				{/switch}
+				</td>
+				<td>{$reply.applicant|getStudentName}</td>
+			</tr>
+			{/volist}
+			{/if}
+
+		</table>
+		<div style='clear:both;' ></div>
+	</main>
+</body>
+</html>

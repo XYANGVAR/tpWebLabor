@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人预约列表</title>
+    <link rel="stylesheet" type="text/css" href="/public/static/css/order.css"/>
+    <link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body>
+<main>
+    <h1>个人预约列表</h1>
+    {if $lab_one}
+    <table>
+        <tr>
+            <th>申请人姓名</th>
+            <th>实验室名称</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>审核状态</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <td>{$Think.session.name}</td>
+            <td>{$lab_one.name}</td>
+            <td>{$lab_one.begin_time}</td>
+            <td>{$lab_one.end_time}</td>
+            <td>
+                {switch $lab_one.is_order }
+                {case 1}
+                <span style="color:darkorange">审核中</span>
+            <td>
+            <button class='adminder_button'><a style="text-decoration: none" href="" onclick="cancel_one();return false">取消预约</a></button>
+            </td>
+            {/case}
+            {case 2}
+            <span style="color:green">通过</span>
+            <td>
+                <button class='adminder_button' disabled>无</button>
+            </td>
+            {/case}
+
+            {case 0}
+            <span style="color:red">拒绝</span>
+            <td>
+                <button class='adminder_button' disabled>无</button>
+            </td>
+            {/case}
+
+            {default /}默认情况
+            {/switch}
+            </td>
+        </tr>
+        {/if}
+
+        {if $lab_two}
+        <tr>
+            <td>{$Think.session.name}</td>
+            <td>{$lab_two.name}</td>
+            <td>{$lab_two.begin_time}</td>
+            <td>{$lab_two.end_time}</td>
+            <td>
+                {switch $lab_two.is_order }
+                {case 1}
+                <span style="color:red">审核中</span>
+            <td>
+                <button class='adminder_button'><a style="text-decoration: none" href="" onclick="cancel_two();return false">取消预约</a></button>
+            </td>
+            {/case}
+            {case 2}
+            <span style="color:green">通过</span>
+            <td>
+                <button class='adminder_button' disabled>无</button>
+            </td>
+            {/case}
+            {default /}默认情况
+            {/switch}
+            </td>
+        </tr>
+        {/if}
+
+        <script>
+            function cancel_one() {
+                if (confirm('真的要取消预约吗？') == true) {
+                    window.location.href = "{:url('user/doCancel',['one_num'=>$lab_one.num])}"
+                }
+            }
+            function cancel_two() {
+                if (confirm('真的要取消预约吗？') == true) {
+                    window.location.href = "{:url('user/doCancel',['two_num'=>$lab_two.num])}"
+                }
+            }
+        </script>
+
+    </table>
+    <div style='clear:both'></div>
+</main>
+{if !($lab_one || $lab_two)}
+<br>
+<br>
+<p>您还没有预约实验室</p>
+{/if}
+</body>
+</html>

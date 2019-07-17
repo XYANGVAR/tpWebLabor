@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>个人主页</title>
+		<link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet" />
+		<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="/public/static/css/stuspace.css"/>
+		<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+		<script src="/public/static/js/stuspace.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+	<p class="title_name">&nbsp&nbsp&nbsp&nbsp&nbsp个人中心
+		<a href="{:url('user/logout')}" id="Login_out" style="color:snow">退出登录</a>
+		<a href="{:url('index/index')}" id="Login_out" style="color:snow">回到首页</a>
+	</p>
+	</p>
+	<div class="main_Menu">
+
+		<div class="My_Menu My_Menu_d" id="biaoge">
+			<iframe src="{:url('user/order')}" target="main"></iframe>
+		</div>
+
+		<div class="My_Menu" id="ShowAll_lab">
+			<iframe src="{:url('user/passwd')}" target="main"></iframe>
+		</div>
+
+		<div class="middle">
+			<div class="menu">
+				<li class="item" id="Profile">
+					<a href="#Profile" class="btn"><i class="far fa-user"></i>Profile</a>
+					<div class="smenu">
+						<a href="#" tabindex="0" class="menu_a menu_d">个人预约列表</a>
+						<a href="#" tabindex="1" class="menu_a">修改密码</a>
+					</div>
+				</li>
+			</div>
+		</div>
+	</div>
+	</body>
+
+</html>

@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>密码修改</title>
+        <link rel="stylesheet" type="text/css" href="/public/static/css/passwd.css"/>
+        <link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+        <script src="/public/static/js/passwd.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="/public/static/js/jquery-3.3.1.min.js"></script>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <header class="head">
+            <div onclick="goBack()"></div>
+            <div>修改密码</div>
+        </header>
+        <form method="post" id="login">
+            <div class="mainBody">
+                <div class="inputs">
+                    <div>
+                        <label for="prevpd">原密码:</label>
+                        <input placeholder="请输入原密码" id="prevpd" name="prepd" type="password">
+                    </div>
+                    <div>
+                        <label for="newpd">新密码:</label>
+                        <input placeholder="请输入新密码" id="newpd" name="newpd" type="password" >
+                    </div>
+                    <div>
+                        <label for="newpdagain">确认新密码:</label>
+                        <input placeholder="请再次输入新密码" id="newpdagain" name="newpdagain" type="password" >
+                    </div>
+                    <div>
+                        密码标准：6-20位大写字母、小写字母、数字。
+                    </div>
+                </div>
+                <div class="confirm waiting">
+                    <button type="button" class="submit" id="sub" >确定</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
+
+<script>
+    $(function () {
+        $("#sub").on('click',function () {
+            $.ajax({
+                type: 'post',
+                url:"{:url('teacher/doPasswd')}",
+                data:$('#login').serialize(),
+                dataType:'json',
+                success:function (data) {
+                    switch (data.success) {
+                        case 1:
+                            alert(data.message);
+                            window.location.href = "{:url('teacher/Passwd')}";
+                            break;
+                        case 0:
+                        case -1:
+                            alert(data.message);
+                            window.location.back;
+                    }
+                },
+                error:function () {
+                    alert('error');
+                }
+            })
+        })
+    });
+</script>

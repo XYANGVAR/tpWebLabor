@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>实验室网上预约系统</title>
+    <link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet"/>
+    <link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="/public/static/css/index.css"/>
+    <link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="services-section">
+    <div class="middle">
+
+        {if $Think.session.name}
+        <a class="btn" href="{:url('index/stuspace')}">
+            <i class="fab">{$Think.session.name}</i>
+        </a>
+        {else/}
+        <a class="btn" href="{:url('user/login')}">
+            <i class="fab">登陆</i>
+        </a>
+        {/if}
+
+
+    </div>
+    <div class="inner-width">
+        <h1 class="section-title">实验室网上预约系统</h1>
+        <div class="border"></div>
+        <div class="services-container">
+            <div class="service-box">
+                <a href="showlabs.html" class="btna">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="service-title">实验室预定</div>
+                    <div class="service-desc">
+
+                    </div>
+                </a>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

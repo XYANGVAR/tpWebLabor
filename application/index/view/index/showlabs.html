@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>实验室列表</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<script src="/public/static/lib/owl.carousel.min.js"></script>
+		<link rel="stylesheet" href="/public/static/lib/owl.carousel.min.css" />
+		<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+		<link rel="stylesheet" href="/public/static/lib/owl.theme.default.min.css" />
+		<link rel="stylesheet" type="text/css" href="/public/static/css/showlabs.css"/>
+	</head>
+
+	<body>
+		<div class="testimonia-section">
+			<div class="inner-width">
+				<h1 style="color:#f8f8f8">实验室介绍</h1>
+				<div class="border"></div>
+				<!--$labList为数据集，必须使用isEmpty来判断-->
+				{if $labList->isEmpty()}
+				<br>
+				<br>
+				<p style="text-align: center">当前没有实验室。</p>
+				{else/}
+				{volist name="labList" id="lab"}
+				<div class="sliders">
+					<a href="{:url('index/details',['num'=>$lab.num])}">
+						<div class="testimonial">
+							<div class="test-info">
+								<img class="test-pic" src="/public/static/images/timg.jpg" alt="" />
+								<div class="test-name">
+									<span>实验室名称:</span><span class="Teacher_name">{$lab.name}</span>
+								</div>
+							</div>
+							<p id="Laboratory1">
+								实验室编号: {$lab.num}<br>
+								负责人: {$lab.charge_person|getTeacherName}<br>
+								<!--功能: {$lab.function}<br>-->
+								<!--注意事项: {$lab.attention}<br>-->
+							</p>
+						</div>
+					</a>
+				</div>
+				{/volist}
+				{/if}
+			</div>
+		</div>
+		<script>
+			$('.owl-carousel').owlCarousel({
+				margin: 10,
+				responsiveClass: true,
+				responsive: {
+					0: {
+						items: 1
+					},
+					680: {
+						items: 2
+					},
+					960: {
+						items: 3
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

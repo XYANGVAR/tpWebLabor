@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人预约列表</title>
+	<link rel="stylesheet" type="text/css" href="/public/static/css/order.css"/>
+	<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body>
+	<main>
+		<h1>预约列表</h1>
+		{if $lab.is_order==1}
+		<table>
+			<tr>
+				<th>申请人姓名</th>
+				<th>实验室名称</th>
+				<th>实验室编号</th>
+				<th>开始时间</th>
+				<th>结束时间</th>
+				<th>操作</th>
+			</tr>
+			<tr>
+				<td>{$lab.applicant|getStudentName}</td>
+				<td>{$lab.name}</td>
+				<td>{$lab.num}</td>
+				<td>{$lab.begin_time}</td>
+				<td>{$lab.end_time}</td>
+				<td>
+					<button class='adminder_button'><a style="text-decoration: none" href="" onclick="agree();return false">同意</a></button>
+					<button class='adminder_button'><a style="text-decoration: none" href="" onclick="deny();return false">拒绝</a></button>
+					<script>
+						function agree() {
+							if (confirm('同意该实验室的申请？') == true) {
+								window.location.href = "{:url('teacher/doReply',['result'=>1,'num'=>$lab.num])}"
+							}
+						}
+
+						function deny() {
+							if (confirm('真的要拒绝吗？') == true) {
+								window.location.href = "{:url('teacher/doReply',['result'=>0,'num'=>$lab.num])}"
+							}
+						}
+					</script>
+				</td>
+			</tr>
+		</table>
+		<div style='clear:both'></div>
+
+	</main>
+	{else/}
+	<br>
+	<br>
+	<p>当前无申请。</p>
+	{/if}
+</body>
+</html>

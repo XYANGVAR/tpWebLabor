@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+		<script type="text/javascript" src="/public/static/js/jquery-3.3.1.min.js"></script>
+		<title>学生登录</title>
+		<!--学生登录界面-->
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: sans-serif;
+				/*background: #4C99E7;*/
+				background: url(/public/static/images/bg3.jpg);
+				/*background-repeat:no-repeat;*/
+				background-size:cover;
+				/*-moz-background-size:100% 100%;*/
+			}
+			.box {
+				width: 300px;
+				padding: 40px;
+				position: absolute;
+				top: 50%;
+				left: 75%;
+				transform: translate(-50%, -50%);
+				background: no-repeat;
+				background: rgba(255,255,255,0.3);
+				text-align: center;
+
+			}
+			.box h1 {
+				color: white;
+				text-transform: uppercase;
+				font-weight: 500;
+				font-family: STXingkai;
+				font-size: 50px;
+			}
+			.box input[type='text'],
+			.box input[type='password'] {
+				border: 0;
+				background: none;
+				display: block;
+				margin: 20px auto;
+				text-align: center;
+				border: 2px solid #3498db;
+				padding: 14px 10px;
+				width: 200px;
+				outline: none;
+				color: white;
+				border-radius: 24px;
+				transition: 0.25s;
+			}
+			.box input[type='text']:focus,
+			.box input[type='password']:focus {
+				width: 280px;
+				border-color: #2ecc71;
+			}
+			.submit {
+				border: 0;
+				background: none;
+				margin: 20px auto;
+				margin-top: 0;
+				display: inline-block;
+				text-align: center;
+				border: 2px solid #3498db;
+				padding: 10px 40px;
+				outline: none;
+				color: white;
+				border-radius: 24px;
+				transition: 0.25s;
+				cursor: pointer;
+				text-decoration: none;
+				font-size: 12px;
+			}
+			.submit:hover {
+				background: #2ecc71;
+				border-color: #2ecc71;
+			}
+			.box a,button {
+				text-decoration: none;
+				color: #fff;
+				font-family: 'montserrat', sans-serif;
+				font-size: 14px;
+				padding: 10px;
+				transition: 0.8s;
+				display: block;
+			}
+			.box a:hover {
+				background: rgba(0, 0, 0, 0.25);
+			}
+			input::-webkit-input-placeholder {
+				      /* placeholder颜色  */
+				color: #000000;
+				       /* placeholder字体大小  */
+				font-size: 12px;
+				       /* placeholder位置  */
+				text-align:center;
+
+				      }
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<h1>学生登录</h1>
+			<form method="post" id="login">
+				<input type="text" placeholder="学号" name="num"/>
+				<input type="password" placeholder="密码" name="password"/>
+				<button type="button" class="submit" id="sub" >Login</button>
+			</form>
+			<a href="register.html">Register</a>
+		</div>
+	</body>
+</html>
+
+<script>
+	$(function () {
+		$("#sub").on('click',function () {
+			$.ajax({
+				type: 'post',
+				url:"{:url('user/loginCheck')}",
+				data:$('#login').serialize(),
+				dataType:'json',
+				success:function (data) {
+					switch (data.success) {
+						case 1:
+							alert(data.message);
+							window.location.href = "{:url('index/index')}";
+							break;
+						case 0:
+						case -1:
+							alert(data.message);
+							window.location.back;
+					}
+				},
+				error:function () {
+					alert('error');
+				}
+			})
+		})
+	});
+</script>

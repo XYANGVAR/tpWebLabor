@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>个人主页</title>
+		<link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet" />
+		<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="/public/static/css/teachspace.css"/>
+		<script src="/public/static/js/teachspace.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<p class="title_name">实验室预约后台管理<a href="{:url('teacher/logout')}" id="Login_out" style="color:snow">退出登录</a></p>
+		<div class="main_Menu">
+			
+			<div class="My_Menu My_Menu_d" id="biaoge">
+				<iframe src="{:url('teacher/applylist')}" target="main" id="set3"></iframe>
+			</div>
+			
+			<div class="My_Menu" id="ShowAll_lab">
+				<iframe src="{:url('teacher/replylist')}" target="main" id="set4"></iframe>
+			</div>
+			
+			<div class="My_Menu" id="Text">
+				<iframe src="{:url('teacher/addlab')}" target="main" id="set1"></iframe>
+			</div>
+			
+			<div class="My_Menu" id="ReverseCard">
+				<iframe src="{:url('teacher/droplab')}" target="main" id="set2"></iframe>
+			</div>
+			
+			<div class="My_Menu" id="changeKey">
+				<iframe src="{:url('teacher/passwd')}" target="main"></iframe>
+			</div>
+			
+			<div class="middle">
+				<div class="menu">
+					<li class="item" id="Profile">
+						<a href="#Profile" class="btn"><i class="far fa-user"></i>个人申请</a>
+						<div class="smenu">
+							<a href="#" tabindex="0" class="menu_a menu_d">申请列表</a>
+							<a href="#" tabindex="1" class="menu_a">已审核</a>
+						</div>
+					</li>
+					<li class="item" id="Setting">
+						<a href="#Setting" class="btn"><i class="fas fa-cog"></i>实验室管理</a>
+						<div class="smenu">
+							<a href="#" class="menu_a" tabindex="2">添加实验室</a>
+							<a href="#" class="menu_a" tabindex="3">删除实验室</a>
+						</div>
+					</li>
+					<li class="item" id="Login">
+						<a href="#Login" class="btn"><i class="fas fa-sign-out-alt"></i>安全设置</a>
+						<div class="smenu">
+							<a href="#" class="menu_a" tabindex="4">修改密码</a>
+						</div>
+					</li>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

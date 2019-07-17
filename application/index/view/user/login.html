@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Login</title>
+		<link rel="stylesheet" type="text/css" href="/public/static/css/login.css"/>
+		<link href="/public/favicon.ico" rel="icon" type="image/x-icon" />
+	</head>
+	<body>
+		<div id="Menu">
+			<div class="head">
+				<img class="logo1" src="/public/static/images/logo.png"/>
+				<p class="title">实验室网上预约系统</p>
+			</div>
+			<div id="student">
+				<a class="btn" href="{:url('user/teachlogin')}">
+					教师登录
+					<i class="fab fa-github"></i>
+				</a>
+			</div>
+			
+			<div id="teacher">
+				<a class="btn" href="{:url('user/stulogin')}">
+					学生登录
+					<i class="fab fa-github"></i>
+				</a>
+			</div>
+		</div>
+		
+	</body>
+	
+</html>
